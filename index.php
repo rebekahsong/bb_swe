@@ -31,9 +31,6 @@ if(isset($_REQUEST["register"])){
 
     $out_value = "Successfuly registered";
   }
-  else {
-    $out_value = "";
-  }
 }
 
 if(isset($_REQUEST["retrieve"])){
@@ -51,9 +48,6 @@ if(isset($_REQUEST["retrieve"])){
 		array_push($out_value_songs_and_ratings,$song_and_rating);
 		}
   
-	}
-	else {
-	  $out_value_songs_and_ratings = array();
 	}
   }
 
