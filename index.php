@@ -1,15 +1,3 @@
-<!-- 
-  COMP 333: Software Engineering
-  Sebastian Zimmeck (szimmeck@wesleyan.edu) 
-
-  PHP sample script for querying a database with SQL. This script can be run 
-  from inside the htdocs directory in XAMPP. The script assumes that there is a 
-  database set up (e.g., via PHPMyAdmin) named COMP333_SQL_Tutorial with a 
-  student_grades table per the sql_tutorial.md.
-
-  Note: To run this file as a PHP script change the file extension to .php.
--->
-
 <!DOCTYPE HTML>
 <html lang="en">
 <head>
@@ -30,43 +18,82 @@ if ($conn->connect_error) {
   die("Connection failed: " . $conn->connect_error);
 }
 
-if(isset($_REQUEST["submit"])){
+if(isset($_REQUEST["register"])){
   $out_value = "";
   $u_username = $_REQUEST['username'];
+  $u_password = $_REQUEST['password'];
 
-  if(!empty($u_username)){
-    $sql_query = "SELECT * FROM ratings WHERE username = ('$u_username')";
+
+  if(!empty($u_username)&&(!empty($u_password))){
+	$sql_query = "INSERT INTO users ( username, password ) VALUES ( '$u_username', '$u_password' )";
+
     $result = mysqli_query($conn, $sql_query);
 
-    $row = mysqli_fetch_assoc($result);
-    $out_value = "The song is: " . $row['song'];
+    $out_value = "Successfuly registered";
   }
   else {
-    $out_value = "No ratings available!";
+    $out_value = "";
   }
 }
+
+if(isset($_REQUEST["retrieve"])){
+
+	$out_value_songs_and_ratings = array();
+	$u_username = $_REQUEST['username'];
+  
+	if(!empty($u_username)){
+	  $sql_query = "SELECT * FROM ratings WHERE username = ('$u_username')";
+	  $result = mysqli_query($conn, $sql_query);
+
+		while($row = mysqli_fetch_assoc($result))
+		{
+		$song_and_rating = array($row['song'], $row['rating']);
+		array_push($out_value_songs_and_ratings,$song_and_rating);
+		}
+  
+	}
+	else {
+	  $out_value_songs_and_ratings = array();
+	}
+  }
 
 $conn->close();
 ?>
 
 <!-- 
-  HTML code for the form by which the user can query data.
-  Note that we are using names (to pass values around in PHP) and not ids
-  (which are for CSS styling or JavaScript functionality).
-  You can leave the action in the form open 
-  (https://stackoverflow.com/questions/1131781/is-it-a-good-practice-to-use-an-empty-url-for-a-html-forms-action-attribute-a)
+  HTML code
 -->
+<h1>MUSIC-DB</h1>
+<h3>Register</h3>
 <form method="POST" action="">
-Username: <input type="text" name="username" placeholder="Enter username to see their ratings" /><br>
-<input type="submit" name="submit" value="Submit"/>
-<!-- 
-  Make sure that there is a value available for $out_value.
-  If so, print to the screen.
- -->
+Username: <input type="text" name="username" placeholder="Enter username" /><br>
+Password: <input type="text" name="password" placeholder="Enter password" /><br>
+<input type="submit" name="register" value="Register"/>
+
 <p><?php 
   if(!empty($out_value)){
-    echo $out_value;
+	echo "<h5>$out_value</h5>";
+} else {
+	echo "<h5>Please enter a valid and unique username</h5>";
+}
+?></p>
+</form>
+
+<h3>Find Ratings</h3>
+<form method="POST" action="">
+Username: <input type="text" name="username" placeholder="Enter username" /><br>
+<input type="submit" name="retrieve" value="Retrieve"/>
+
+<p><?php 
+  if(!empty($out_value_songs_and_ratings)){
+	foreach($out_value_songs_and_ratings as $song_and_rating) {
+		
+		echo "<h5>$song_and_rating[0] -> $song_and_rating[1]</h5>";
+	}
+  } else {
+	  echo "<h5>Please enter a valid user with ratings</h5>";
   }
+  $out_value_songs_and_ratings=array();
 ?></p>
 </form>
 
