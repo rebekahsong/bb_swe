@@ -25,11 +25,21 @@ if(isset($_REQUEST["register"])){
 
 
   if(!empty($u_username)&&(!empty($u_password))){
-	$sql_query = "INSERT INTO users ( username, password ) VALUES ( '$u_username', '$u_password' )";
 
-    $result = mysqli_query($conn, $sql_query);
+	$sql_query_check_username = "SELECT * FROM users WHERE username = '$u_username'";
+	$result_check_username = mysqli_query($conn, $sql_query_check_username);
+	$row_result = mysqli_fetch_assoc($result_check_username);
 
-    $out_value = "Successfuly registered";
+	if (empty($row_result)){
+		$sql_query = "INSERT INTO users ( username, password ) VALUES ( '$u_username', '$u_password' )";
+
+		$result = mysqli_query($conn, $sql_query);
+	
+		$out_value = "Successfuly registered";
+	} else {
+		$out_value = "Username already taken";
+	}
+
   }
 }
 
@@ -39,6 +49,7 @@ if(isset($_REQUEST["retrieve"])){
 	$u_username = $_REQUEST['username'];
   
 	if(!empty($u_username)){
+		
 	  $sql_query = "SELECT * FROM ratings WHERE username = ('$u_username')";
 	  $result = mysqli_query($conn, $sql_query);
 
