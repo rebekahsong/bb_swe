@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
-from .models import Users, Songs, Ratings
+from .models import Users, Songs, Ratings, Artists
 
 def mainView(request):
     if request.method == 'POST':
@@ -19,6 +19,9 @@ def mainView(request):
                     user.save()
                     context = {'createAccountResponse': "successfuly registered"}
                     return render(request, 'musey/index.html', context)
+            else:
+                context = {'createAccountResponse': "please enter a valid username and password"}
+                return render(request, 'musey/index.html', context)
         elif 'retrieveSongs' in request.POST:
             un_song = request.POST.get("un_song", None)
             if un_song:
@@ -32,12 +35,32 @@ def mainView(request):
                     context = {'songsRatingsResponse':songsAndRatings}
                     return render(request, 'musey/index.html', context )
                 else:
-                    return HttpResponse("No reviews by this user")
+                    context = {'songsRatingsResponse':"No review by this user"}
+                    return render(request, 'musey/index.html', context )
             else:
-                return HttpResponse("Please enter a valid username")
+                context = {'songsRatingsResponse':"Please enter a valid username"}
+                return render(request, 'musey/index.html', context )
 
     if request.method == 'GET':
-        return render(request, 'musey/index.html', {'template': 'musey/blank.html'})
+        if 'getArtistSign' in request.GET:
+            artistName = request.GET.get("artist_name", None)
+            if artistName:
+                try:
+                    artistInfo = Artists.objects.get(artist_name=artistName)
+                    name = artistInfo.artist_name
+                    birthplace = artistInfo.birthplace
+                    astrologicalSign = artistInfo.astrological_sign
+                    genre = artistInfo.genre
+                    context = {'artistName':name, 'artistGenre':genre, 'artistBirthplace':birthplace, 'artistAstro':astrologicalSign}
+                    return render(request, 'musey/index.html', context )
+                except:
+                    context = {'artistName': "Invalid Artist Name"}
+                    return render(request, 'musey/index.html', context)
+            else:
+                context = {'signResponse': "Please enter an Artist's Name"}
+                return render(request, 'musey/index.html', context)
+        else:
+            return render(request, 'musey/index.html', {'template': 'musey/blank.html'})
 
     return HttpResponse("You're fucked")
 
