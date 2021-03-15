@@ -11,6 +11,9 @@ class Songs(models.Model):
     artist_name = models.CharField(max_length=200)
     song = models.CharField(primary_key=True, max_length=200)
 
+    def __str__(self):
+        return self.artist_name
+
 class Ratings(models.Model):
     username = models.ForeignKey(Users, on_delete=models.CASCADE)
     song = models.ForeignKey(Songs, on_delete=models.CASCADE)

@@ -10,13 +10,19 @@
         {% csrf_token %}
         username: <input type="text" name="username"/><br/>
         password: <input type="text" name="password"/><br/>
-        <input type="submit" value="Users"/>
+        <input type="submit" value="Users" name="createAccount"/>
     </form>
+    <div>
+        {{ createAccountResponse }}
+    </div>
     <h1>Retrieve Songs by Name</h1>
     <form action="" method="POST">
         {% csrf_token %}
         Username: <input type="text" name="un_song"/><br/>
-        <input type="submit" value="Ratings"/>
+        <input type="submit" value="Ratings" name="retrieveSongs"/>
     </form>
+    <div>
+        {{ songsRatingsResponse }}
+    </div>
 </body>
 </html>
