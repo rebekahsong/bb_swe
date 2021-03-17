@@ -1,4 +1,5 @@
-##Musey
+## Musey
+
 Group: Rebekah Song and Benjamin Bushnell
 
 We pair programmed for most of this project.
@@ -6,15 +7,15 @@ Bekah put more work into Part 1, and wrote the PHP code,
 while Ben did the Django setup and wrote most of the 
 Django Model and View code. All the rest was done together.
 
-###Part 1)
+### Part 1)
 
+Use the provided sql code to create the tables and example information necessary for the music-db. index.php can be run on local web server with XAMPP.
 
+### Part 2)
 
-
-###Part 2)
 To run the site that we built for Part 2, follow these steps:
 
-####Create a Virtual Environment:
+#### Create a Virtual Environment:
 
 Install the virtual environment, `venv`, with:
 
@@ -22,7 +23,7 @@ Install the virtual environment, `venv`, with:
 python3 -m venv venv
 ```
 
-####Activate your virtual environment:  
+#### Activate your virtual environment:  
 
 ```shell
 source venv/bin/activate.fish  
@@ -34,7 +35,7 @@ You can deactivate your virtual environment with:
 deactivate
 ```
 
-####Install Django
+#### Install Django
 
 Install Django in your virtual environment:
 
@@ -42,19 +43,21 @@ Install Django in your virtual environment:
 python3 -m pip install Django
 ```
 
-####Run the Server
+#### Run the Server
+
 from the bb_swe directory:
 
 ```shell
 python3 manage.py runserver
 ```
 
-####Add Users:
+#### Add Users:
 Users can be added directly from the webpage. 
 Simply enter a username and a password, and click the button.
 As long as the username is not already in use, a User will be created.
 
-####Add Artists, Songs, and Ratings:
+#### Add Artists, Songs, and Ratings:
+
 Activate the python shell in the Django project:
 ```shell
 python3 manage.py shell

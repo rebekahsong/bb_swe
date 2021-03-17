@@ -9,7 +9,7 @@ Django Model and View code. All the rest was done together.
 
 ### Part 1)
 
-
+Use the provided sql code to create the tables and example information necessary for the music-db. index.php can be run on local web server with XAMPP.
 
 
 ### Part 2)
