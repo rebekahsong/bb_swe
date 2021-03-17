@@ -1,5 +1,10 @@
 Group: Rebekah Song and Benjamin Bushnell
 
+We pair programmed for most of this project.
+Bekah put more work into Part 1, and wrote the PHP code,
+while Ben did the Django setup and wrote most of the 
+Django Model and View code. All the rest was done together.
+
 Part 1)
 
 
