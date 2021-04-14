@@ -1,61 +1,64 @@
 import React, { Component } from "react";
 import SongsService from "../services/songs.service";
 
-export default class Song extends Component {
+export default class SongDetail extends Component {
   constructor(props) {
     super(props);
-    this.onChangeTitle = this.onChangeTitle.bind(this);
-    this.onChangeDescription = this.onChangeDescription.bind(this);
-    this.getTutorial = this.getTutorial.bind(this);
-    this.updatePublished = this.updatePublished.bind(this);
-    this.updateTutorial = this.updateTutorial.bind(this);
-    this.deleteTutorial = this.deleteTutorial.bind(this);
+    this.onChangeSongTitle = this.onChangeSongTitle.bind(this);
+    this.onChangeArtist = this.onChangeArtist.bind(this);
+    this.getSong = this.getSong.bind(this);
+    //this.updatePublished = this.updatePublished.bind(this);
+    this.updateSong = this.updateSong.bind(this);
+    this.deleteSong = this.deleteSong.bind(this);
 
     this.state = {
-      currentTutorial: {
-        id: null,
-        title: "",
-        description: "",
-        published: false
+      oldSongTitle: "",
+      currentSong: {
+        song_title: "",
+        artist_name: ""
       },
       message: ""
     };
   }
 
   componentDidMount() {
-    this.getTutorial(this.props.match.params.id);
+    this.getSong(this.props.match.params.song_title);
+    console.log(this.oldSongTitle)
   }
 
-  onChangeTitle(e) {
-    const title = e.target.value;
+  onChangeSongTitle(e) {
+    const song_title = e.target.value;
 
     this.setState(function(prevState) {
       return {
-        currentTutorial: {
-          ...prevState.currentTutorial,
-          title: title
+        currentSong: {
+          ...prevState.currentSong,
+          song_title: song_title
         }
       };
     });
   }
 
-  onChangeDescription(e) {
-    const description = e.target.value;
+  onChangeArtist(e) {
+    const artist_name = e.target.value;
     
     this.setState(prevState => ({
-      currentTutorial: {
-        ...prevState.currentTutorial,
-        description: description
+      currentSong: {
+        ...prevState.currentSong,
+        artist_name: artist_name
       }
     }));
   }
 
-  getTutorial(id) {
-    TutorialDataService.get(id)
+  getSong(song_title) {
+    SongsService.get(song_title)
       .then(response => {
         this.setState({
-          currentTutorial: response.data
+          currentSong: response.data,
+          oldSongTitle: response.data.song_title
         });
+        // console.log("old song title")
+        // console.log(this.state.oldSongTitle)
         console.log(response.data);
       })
       .catch(e => {
@@ -63,38 +66,15 @@ export default class Song extends Component {
       });
   }
 
-  updatePublished(status) {
-    var data = {
-      id: this.state.currentTutorial.id,
-      title: this.state.currentTutorial.title,
-      description: this.state.currentTutorial.description,
-      published: status
-    };
-
-    TutorialDataService.update(this.state.currentTutorial.id, data)
-      .then(response => {
-        this.setState(prevState => ({
-          currentTutorial: {
-            ...prevState.currentTutorial,
-            published: status
-          }
-        }));
-        console.log(response.data);
-      })
-      .catch(e => {
-        console.log(e);
-      });
-  }
-
-  updateTutorial() {
-    TutorialDataService.update(
-      this.state.currentTutorial.id,
-      this.state.currentTutorial
+  updateSong() {
+    SongsService.update(
+      this.state.oldSongTitle,
+      this.state.currentSong
     )
       .then(response => {
         console.log(response.data);
         this.setState({
-          message: "The tutorial was updated successfully!"
+          message: "The song was updated successfully!"
         });
       })
       .catch(e => {
@@ -102,11 +82,11 @@ export default class Song extends Component {
       });
   }
 
-  deleteTutorial() {    
-    TutorialDataService.delete(this.state.currentTutorial.id)
+  deleteSong() {    
+    SongsService.delete(this.state.currentSong.song_title)
       .then(response => {
         console.log(response.data);
-        this.props.history.push('/tutorials')
+        this.props.history.push('/songs')
       })
       .catch(e => {
         console.log(e);
@@ -114,13 +94,13 @@ export default class Song extends Component {
   }
 
   render() {
-    const { currentTutorial } = this.state;
+    const { currentSong } = this.state;
 
     return (
       <div>
-        {currentTutorial ? (
+        {currentSong ? (
           <div className="edit-form">
-            <h4>Tutorial</h4>
+            <h4>Song</h4>
             <form>
               <div className="form-group">
                 <label htmlFor="title">Title</label>
@@ -128,30 +108,30 @@ export default class Song extends Component {
                   type="text"
                   className="form-control"
                   id="title"
-                  value={currentTutorial.title}
-                  onChange={this.onChangeTitle}
+                  value={currentSong.song_title}
+                  onChange={this.onChangeSongTitle}
                 />
               </div>
               <div className="form-group">
-                <label htmlFor="description">Description</label>
+                <label htmlFor="artist_name">Artist Name</label>
                 <input
                   type="text"
                   className="form-control"
-                  id="description"
-                  value={currentTutorial.description}
-                  onChange={this.onChangeDescription}
+                  id="artist_name"
+                  value={currentSong.artist_name}
+                  onChange={this.onChangeArtist}
                 />
               </div>
 
-              <div className="form-group">
+              {/* <div className="form-group">
                 <label>
-                  <strong>Status:</strong>
+                  <strong>Rating:</strong>
                 </label>
-                {currentTutorial.published ? "Published" : "Pending"}
-              </div>
+                {currentSong.published ? "Published" : "Pending"}
+              </div> */}
             </form>
 
-            {currentTutorial.published ? (
+            {/* {currentSong.published ? (
               <button
                 className="badge badge-primary mr-2"
                 onClick={() => this.updatePublished(false)}
@@ -165,11 +145,11 @@ export default class Song extends Component {
               >
                 Publish
               </button>
-            )}
+            )} */}
 
             <button
               className="badge badge-danger mr-2"
-              onClick={this.deleteTutorial}
+              onClick={this.deleteSong}
             >
               Delete
             </button>
@@ -177,7 +157,7 @@ export default class Song extends Component {
             <button
               type="submit"
               className="badge badge-success"
-              onClick={this.updateTutorial}
+              onClick={this.updateSong}
             >
               Update
             </button>
@@ -186,7 +166,7 @@ export default class Song extends Component {
         ) : (
           <div>
             <br />
-            <p>Please click on a Tutorial...</p>
+            <p>Please click on a Song...</p>
           </div>
         )}
       </div>

@@ -72,7 +72,7 @@ export default class SongsList extends Component {
   }
 
   searchSong() {
-    SongsService.findByTitle(this.state.searchSong)
+    SongsService.get(this.state.searchSong)
       .then(response => {
         this.setState({
           songs: response.data
@@ -150,7 +150,7 @@ export default class SongsList extends Component {
               </div>
 
               <Link
-                to={"/songs/" + currentSong.song}
+                to={"/songs/" + currentSong.song_title}
                 className="badge badge-warning"
               >
                 Edit

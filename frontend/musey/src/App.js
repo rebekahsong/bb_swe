@@ -5,6 +5,7 @@ import { Link, Switch, Route} from 'react-router-dom';
 import "bootstrap/dist/css/bootstrap.min.css";
 import SongsList from './components/song-list.component';
 import AddSong from './components/create-song.component';
+import SongDetail from './components/song-detail.component';
 
 class App extends Component {
   render() {
@@ -33,7 +34,7 @@ class App extends Component {
               <Switch>
                 <Route exact path={["/", "/songs"]} component={SongsList} />
                 <Route exact path="/add" component={AddSong} />
-                <Route path="/tutorials/:song" component={SongsList} />
+                <Route path="/songs/:song_title" component={SongDetail} />
               </Switch>
             </div>
         </div>
