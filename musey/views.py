@@ -5,7 +5,7 @@ from rest_framework.parsers import JSONParser
 from rest_framework import status
 from .serializers import SongsSerializer
 from rest_framework.decorators import api_view
-from .models import Users, Songs, Ratings, Artists
+from .models import Users, Songs, Ratings
 
 def mainView(request):
     if request.method == 'POST':
@@ -45,27 +45,6 @@ def mainView(request):
             else:
                 context = {'songsRatingsResponse':"Please enter a valid username"}
                 return render(request, 'musey/index.html', context )
-
-    if request.method == 'GET':
-        if 'getArtistSign' in request.GET:
-            artistName = request.GET.get("artist_name", None)
-            if artistName:
-                try:
-                    artistInfo = Artists.objects.get(artist_name=artistName)
-                    name = artistInfo.artist_name
-                    birthplace = artistInfo.birthplace
-                    astrologicalSign = artistInfo.astrological_sign
-                    genre = artistInfo.genre
-                    context = {'artistName':name, 'artistGenre':genre, 'artistBirthplace':birthplace, 'artistAstro':astrologicalSign}
-                    return render(request, 'musey/index.html', context )
-                except:
-                    context = {'artistName': "Invalid Artist Name"}
-                    return render(request, 'musey/index.html', context)
-            else:
-                context = {'signResponse': "Please enter an Artist's Name"}
-                return render(request, 'musey/index.html', context)
-        else:
-            return render(request, 'musey/index.html', {'template': 'musey/blank.html'})
 
     return HttpResponse("You're fucked")
 
