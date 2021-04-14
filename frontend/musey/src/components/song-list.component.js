@@ -86,6 +86,7 @@ export default class SongsList extends Component {
 
   render() {
     const { searchSong, songs, currentSong, currentIndex } = this.state;
+    const songArray = Array.from(songs)
 
     return (
       <div className="list row">
@@ -113,17 +114,13 @@ export default class SongsList extends Component {
           <h4>Songs List</h4>
 
           <ul className="list-group">
-            {songs &&
-              songs.map((song, index) => (
-                <li
-                  className={
-                    "list-group-item " +
-                    (index === currentIndex ? "active" : "")
-                  }
+            {songArray &&
+              songArray.map((song, index) => (
+                <li className={"list-group-item " + (index === currentIndex ? "active" : "")}
                   onClick={() => this.setActiveSongs(song, index)}
                   key={index}
                 >
-                  {song.song}
+                  {song.song_title}
                 </li>
               ))}
           </ul>
@@ -143,7 +140,7 @@ export default class SongsList extends Component {
                 <label>
                   <strong>Title:</strong>
                 </label>{" "}
-                {currentSong.song}
+                {currentSong.song_title}
               </div>
               <div>
                 <label>

@@ -26,7 +26,7 @@ class SongsService {
   }
 
   findByTitle(title) {
-    return http.get(`/songs?title=${title}`);
+    return http.get(`/songs/${title}`);
   }
 }
 
