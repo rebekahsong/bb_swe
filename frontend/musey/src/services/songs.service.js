@@ -5,16 +5,16 @@ class SongsService {
     return http.get("");
   }
 
-  get(id) {
-    return http.get(`${id}`);
+  get(song_title) {
+    return http.get(`/songs/${song_title}`);
   }
 
   create(data) {
     return http.post("/songs", data);
   }
 
-  update(id, data) {
-    return http.put(`/songs/${id}`, data);
+  update(song_title, data) {
+    return http.put(`/songs/${song_title}`, data);
   }
 
   delete(id) {
@@ -25,9 +25,9 @@ class SongsService {
     return http.delete(`/songs`);
   }
 
-  findByTitle(title) {
-    return http.get(`/songs/${title}`);
-  }
+  //findByTitle(title) {
+  //  return http.get(`/songs/${title}`);
+  //}
 }
 
 export default new SongsService();
