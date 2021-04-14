@@ -1,25 +1,45 @@
-import logo from './logo.svg';
-import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import './App.css';
+import React, { Component } from "react";
+import { Link, Switch, Route} from 'react-router-dom';
+import "bootstrap/dist/css/bootstrap.min.css";
+import SongsList from './components/song-list.component';
+import AddSong from './components/create-song.component';
+
+class App extends Component {
+  render() {
+    return (
+      <div>
+        <nav className="navbar navbar-expand navbar-dark bg-dark">
+          <a href="/songs" className="navbar-brand">
+            Ben
+          </a>
+          <div className="navbar-nav mr-auto">
+            <li className="nav-item">
+              <Link to={"/songs"} className="nav-link">
+                Songs
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link to={"/add"} className="nav-link">
+                Add
+              </Link>
+            </li>
+          </div>
+        </nav>
+
+        <div className="App">
+            <div className="container mt-3">
+              <Switch>
+                <Route exact path={["/", "/songs"]} component={SongsList} />
+                <Route exact path="/add" component={AddSong} />
+                <Route path="/tutorials/:song" component={SongsList} />
+              </Switch>
+            </div>
+        </div>
+      </div>
+    );
+  }
 }
 
 export default App;

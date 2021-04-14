@@ -15,15 +15,15 @@ class Artists(models.Model):
 
 class Songs(models.Model):
     artist_name = models.ForeignKey(Artists, on_delete=models.CASCADE)
-    song = models.CharField(primary_key=True, max_length=200)
-
+    song_title = models.CharField(primary_key=True, max_length=200)
+    
     def __str__(self):
-        return self.song
+        return self.song_title
 
 class Ratings(models.Model):
     username = models.ForeignKey(Users, on_delete=models.CASCADE)
-    song = models.ForeignKey(Songs, on_delete=models.CASCADE)
+    song = models.ForeignKey(Songs, primary_key=True, on_delete=models.CASCADE)
     rating = models.IntegerField(default=-1)
 
     def __str__(self):
-        return self.song.song + " -> " + str(self.rating)
+        return self.song.song_title + " -> " + str(self.rating)
