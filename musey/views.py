@@ -89,7 +89,17 @@ def song_detail(request, song_title):
         return JsonResponse(songs_serializer.data)
 
     elif request.method == 'PUT': 
-        song_data = JSONParser().parse(request) 
+        song_data = JSONParser().parse(request)
+        #if the update has changed the title of the song, delete the old song.
+        print(song_data)
+        if song_title != song_data['song_title']:
+            song_to_del = Songs.objects.get(song_title=song_title)
+            song_to_del.delete()
+            songs_serializer = SongsSerializer(data=song_data)
+            if songs_serializer.is_valid():
+                songs_serializer.save()
+                return JsonResponse(songs_serializer.data) 
+            return JsonResponse(songs_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         songs_serializer = SongsSerializer(song, data=song_data) 
         if songs_serializer.is_valid(): 
             songs_serializer.save() 

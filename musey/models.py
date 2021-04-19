@@ -21,7 +21,7 @@ class Songs(models.Model):
         return self.song_title
 
 class Ratings(models.Model):
-    usernameSong = models.CharField(primary_key=True, max_length=200, default='-1')
+    usernameSong = models.CharField(primary_key=True, max_length=200)
     username = models.ForeignKey(Users, on_delete=models.CASCADE)
     song = models.ForeignKey(Songs, on_delete=models.CASCADE)
     rating = models.IntegerField(default=-1)

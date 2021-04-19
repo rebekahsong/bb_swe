@@ -19,7 +19,6 @@ from django.urls import include, path, re_path
 urlpatterns = [
     path('musey/', include('musey.urls')),
     path('admin/', admin.site.urls),
-    path('admin/', admin.site.urls),
     re_path(r'^api/v1/', include('djoser.urls')),
     re_path(r'^api/v1/', include('djoser.urls.authtoken'))
 ]
