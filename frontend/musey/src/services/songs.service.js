@@ -33,10 +33,6 @@ class SongsService {
   deleteAll() {
     return baseHttp().delete(`/songs`);
   }
-
-  //findByTitle(title) {
-  //  return http.get(`/songs/${title}`);
-  //}
 }
 
 export default new SongsService();
