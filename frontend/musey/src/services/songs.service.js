@@ -1,33 +1,38 @@
-import http from "../http-common";
+import axios from "axios";
+import authHeader from "../utils/Utils";
+
+function baseHttp() {
+  return axios.create({
+    baseURL: "http://127.0.0.1:8000/musey/api",
+    headers:
+      authHeader(),
+  })
+}
 
 class SongsService {
   getAll() {
-    return http.get("");
+    return baseHttp().get("");
   }
 
   get(song_title) {
-    return http.get(`/songs/${song_title}`);
+    return baseHttp().get(`/songs/${song_title}`);
   }
 
   create(data) {
-    return http.post("/songs", data);
+    return baseHttp().post("/songs", data);
   }
 
   update(song_title, data) {
-    return http.put(`/songs/${song_title}`, data);
+    return baseHttp().put(`/songs/${song_title}`, data);
   }
 
   delete(id) {
-    return http.delete(`/songs/${id}`);
+    return baseHttp().delete(`/songs/${id}`);
   }
 
   deleteAll() {
-    return http.delete(`/songs`);
+    return baseHttp().delete(`/songs`);
   }
-
-  //findByTitle(title) {
-  //  return http.get(`/songs/${title}`);
-  //}
 }
 
 export default new SongsService();

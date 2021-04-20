@@ -22,6 +22,20 @@ export const toastOnError = error => {
   }
 };
 
+export default function authHeader() {
+  // return authorization header with basic auth credentials
+  let user = JSON.parse(localStorage.getItem('user'));
+  let token = localStorage.getItem('token')
+
+  if (user && token) {
+    console.log("Authenticated Request")
+      return { "Content-type": "application/json", 'Authorization': 'Token ' + token };
+  } else {
+    console.log("This shit goin on")
+      return {"Content-type": "application/json"};
+  }
+}
+
 export const isEmpty = value =>
   value === undefined ||
   value === null ||

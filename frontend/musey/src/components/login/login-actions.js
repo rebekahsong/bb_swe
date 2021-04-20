@@ -73,6 +73,7 @@ export const logout = () => dispatch => {
       dispatch(unsetCurrentUser());
       dispatch(push("/"));
       toast.success("Logout successful.");
+      window.location = ""
     })
     .catch(error => {
       dispatch(unsetCurrentUser());
