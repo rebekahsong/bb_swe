@@ -70,8 +70,6 @@ export default class SongDetail extends Component {
           currentSong: response.data,
           oldSongTitle: response.data.song_title
         });
-        // console.log("old song title")
-        // console.log(this.state.oldSongTitle)
         console.log(response.data);
       })
       .catch(e => {
@@ -106,6 +104,9 @@ export default class SongDetail extends Component {
       });
   }
 
+  //TODO: change so you can only delete your own 
+//TODO: change the update so it only updates the user's rating not anything else
+
   render() {
     const { currentSong } = this.state;
 
@@ -136,7 +137,7 @@ export default class SongDetail extends Component {
                 />
               </div>
               <div className="form-group">
-                <label htmlFor="avgRating">avgRating</label>
+                <label htmlFor="avgRating">Your Rating</label>
                 <input
                   type="text"
                   className="form-control"

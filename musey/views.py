@@ -4,8 +4,10 @@ from django.http.response import JsonResponse
 from rest_framework.parsers import JSONParser 
 from rest_framework import status
 from .serializers import SongsSerializer
+from .serializers import RatingsSerializer
 from rest_framework.decorators import api_view
 from .models import Users, Songs, Ratings
+import json
 
 def mainView(request):
     if request.method == 'POST':
@@ -66,13 +68,9 @@ def songs_list(request):
     elif request.method == 'POST':
         song_data = JSONParser().parse(request)
         songs_serializer = SongsSerializer(data=song_data)
-        #print(songs_serializer)
         if songs_serializer.is_valid():
             songs_serializer.save()
             return JsonResponse(songs_serializer.data, status=status.HTTP_201_CREATED)
-        #print(song_data)
-        #try:
-        #    artist
         return JsonResponse(songs_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     elif request.method == 'DELETE':
@@ -112,6 +110,42 @@ def song_detail(request, song_title):
         song.delete() 
         return JsonResponse({'message': 'Song was deleted successfully!'}, status=status.HTTP_204_NO_CONTENT)
 
- 
-    
+@api_view(['GET', 'POST', 'DELETE'])
+def ratings(request):
+    if request.method == 'POST':
+        ratings_data = JSONParser().parse(request)
+
+        try:
+            userString = ratings_data['username']
+            userDict = json.loads(userString)
+            username = userDict.get("username")
+            songTitle = ratings_data["song"]
+            rating = ratings_data["rating"]
+        except Users.BadData:
+            return JsonResponse({'message': 'Bad Data'}, status=status.HTTP_400_BAD_REQUEST)
+
+        try: 
+            user = Users.objects.get(username="bex")     
+            song = Songs.objects.get(song_title=songTitle) 
+            usernameSong = username + songTitle      
+        except Users.DoesNotExist: 
+            return JsonResponse({'message': 'The user does not exist'}, status=status.HTTP_404_NOT_FOUND)
+        
+        ratingsDict = {}
+        ratingsDict.update({'usernameSong': usernameSong, 'username': user, 'song': song, 'rating': rating})
+        print(ratingsDict)
+        ratings_serializer = RatingsSerializer(data=ratingsDict)
+
+
+        #print(ratings_serializer)
+        if ratings_serializer.is_valid():
+
+            ratings_serializer.save()
+            return JsonResponse(ratings_serializer.data, status=status.HTTP_201_CREATED)
+        return JsonResponse(ratings_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    elif request.method == 'DELETE':
+        count = Ratings.objects.all().delete()
+        return JsonResponse({'message': '{} Ratings were deleted successfully!'.format(count[0])}, status=status.HTTP_204_NO_CONTENT)
+
         

@@ -163,7 +163,7 @@ export default class SongsList extends Component {
               </div>
               <div>
                 <label>
-                  <strong>avgRating:</strong>
+                  <strong>Average Rating:</strong>
                 </label>{" "}
                 {currentSong.avgRating}
               </div>

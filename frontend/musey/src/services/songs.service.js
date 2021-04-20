@@ -22,6 +22,10 @@ class SongsService {
     return baseHttp().post("/songs", data);
   }
 
+  createRating(data) {
+    return baseHttp().post("/ratings", data);
+  }
+
   update(song_title, data) {
     return baseHttp().put(`/songs/${song_title}`, data);
   }
