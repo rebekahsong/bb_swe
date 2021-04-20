@@ -54,7 +54,7 @@ def songs_list(request):
     if request.method == 'GET':
         songs = Songs.objects.all()
         for song in songs: 
-            song.avgRating.update(avgRating=song.avgRating())
+            song.avgRating = song.avgRating()
         
         song_title = request.GET.get('song_title', None)
         if song_title is not None:

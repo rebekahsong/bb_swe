@@ -163,9 +163,9 @@ export default class SongsList extends Component {
               </div>
               <div>
                 <label>
-                  <strong>Rating:</strong>
+                  <strong>avgRating:</strong>
                 </label>{" "}
-                {currentSong.rating}
+                {currentSong.avgRating}
               </div>
 
               <Link

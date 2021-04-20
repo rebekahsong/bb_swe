@@ -6,7 +6,7 @@ export default class SongDetail extends Component {
     super(props);
     this.onChangeSongTitle = this.onChangeSongTitle.bind(this);
     this.onChangeArtist = this.onChangeArtist.bind(this);
-    this.onChangeRating = this.onChangeRating.bind(this);
+    this.onChangeavgRating = this.onChangeavgRating.bind(this);
     this.getSong = this.getSong.bind(this);
     //this.updatePublished = this.updatePublished.bind(this);
     this.updateSong = this.updateSong.bind(this);
@@ -17,7 +17,7 @@ export default class SongDetail extends Component {
       currentSong: {
         song_title: "",
         artist_name: "",
-        rating: ""
+        avgRating: ""
       },
       message: ""
     };
@@ -52,13 +52,13 @@ export default class SongDetail extends Component {
     }));
   }
 
-  onChangeRating(e) {
-    const rating = e.target.value;
+  onChangeavgRating(e) {
+    const avgRating = e.target.value;
     
     this.setState(prevState => ({
       currentSong: {
         ...prevState.currentSong,
-        rating: rating
+        avgRating: avgRating
       }
     }));
   }
@@ -136,19 +136,19 @@ export default class SongDetail extends Component {
                 />
               </div>
               <div className="form-group">
-                <label htmlFor="rating">Rating</label>
+                <label htmlFor="avgRating">avgRating</label>
                 <input
                   type="text"
                   className="form-control"
-                  id="rating"
-                  value={currentSong.rating}
-                  onChange={this.onChangeRating}
+                  id="avgRating"
+                  value={currentSong.avgRating}
+                  onChange={this.onChangeavgRating}
                 />
               </div>
 
               {/* <div className="form-group">
                 <label>
-                  <strong>Rating:</strong>
+                  <strong>avgRating:</strong>
                 </label>
                 {currentSong.published ? "Published" : "Pending"}
               </div> */}

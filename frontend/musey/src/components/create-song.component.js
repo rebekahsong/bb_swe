@@ -6,14 +6,14 @@ export default class AddSong extends Component {
       super(props);
       this.onChangeSongName = this.onChangeSongName.bind(this);
       this.onChangeSongArtist = this.onChangeSongArtist.bind(this);
-      this.onChangeSongRating = this.onChangeSongRating.bind(this);
+      this.onChangeSongavgRating = this.onChangeSongavgRating.bind(this);
       this.saveSong = this.saveSong.bind(this);
       this.newSong = this.newSong.bind(this);
   
       this.state = {
         song_title: "",
         artist_name: "", 
-        rating: "",
+        avgRating: "",
   
         submitted: false
       };
@@ -31,9 +31,9 @@ export default class AddSong extends Component {
       });
     }
 
-    onChangeSongRating(e) {
+    onChangeSongavgRating(e) {
       this.setState({
-        rating: e.target.value
+        avgRating: e.target.value
       });
     }
   
@@ -42,7 +42,7 @@ export default class AddSong extends Component {
         var data = {
             song_title: this.state.song_title,
             artist_name: this.state.artist_name,
-            rating: this.state.rating
+            avgRating: this.state.avgRating
         };
 
         SongsService.create(data)
@@ -50,7 +50,7 @@ export default class AddSong extends Component {
             this.setState({
                 song_title: response.data.song_title,
                 artist_name: response.data.artist_name,
-                rating: response.data.rating,
+                avgRating: response.data.avgRating,
 
                 submitted: true
             });
@@ -65,7 +65,7 @@ export default class AddSong extends Component {
       this.setState({
         song_title: "",
         artist_name: "",
-        rating: "",
+        avgRating: "",
 
         submitted:false
       });
@@ -110,15 +110,15 @@ export default class AddSong extends Component {
                 </div>
 
                 <div className="form-group">
-                  <label htmlFor="rating">Rating</label>
+                  <label htmlFor="avgRating">avgRating</label>
                   <input
                     type="text"
                     className="form-control"
-                    id="rating"
+                    id="avgRating"
                     required
-                    value={this.state.rating}
-                    onChange={this.onChangeSongRating}
-                    name="rating"
+                    value={this.state.avgRating}
+                    onChange={this.onChangeSongavgRating}
+                    name="avgRating"
                   />
                 </div>
     
