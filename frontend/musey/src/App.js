@@ -33,7 +33,7 @@ class App extends Component {
               <ToastContainer hideProgressBar={true} newestOnTop={true} />
               <nav className="navbar navbar-expand navbar-dark bg-dark">
                 <a href="/songs" className="navbar-brand">
-                  Ben
+                  Musey
                 </a>
                 <div className="navbar-nav mr-auto">
                   <li className="nav-item">
@@ -53,8 +53,8 @@ class App extends Component {
               </nav>
                 <Switch>
                   <Route exact path={["/", "/songs"]} component={requireAuth(SongsList)} />
-                  <Route exact path="/add" component={AddSong} />
-                  <Route path="/songs/:song_title" component={SongDetail} />
+                  <Route exact path="/add" component={requireAuth(AddSong)} />
+                  <Route path="/songs/:song_title" component={requireAuth(SongDetail)} />
                   <Route exact path="/signup" component={Signup} />
                   <Route exact path = "/login" component={Login}/>
                 </Switch>
