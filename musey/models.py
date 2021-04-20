@@ -11,11 +11,11 @@ class Users(models.Model):
 class Songs(models.Model):
     song_title = models.CharField(primary_key=True, max_length=200)
     artist_name = models.CharField(max_length=100)
+    avgRating = models.CharField(max_length=100, null=True)
     
-    @property
-    def average_rating(self):
+    def avgRating(self):
         rating = Ratings.objects.filter(song=self.song_title)
-        print(self.ratings_set.aggregate(Avg('rating'))['rating__avg'])
+        return str((self.ratings_set.aggregate(Avg('rating'))['rating__avg']))
 
     def __str__(self):
         return self.song_title

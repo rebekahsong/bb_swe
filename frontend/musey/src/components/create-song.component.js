@@ -6,12 +6,14 @@ export default class AddSong extends Component {
       super(props);
       this.onChangeSongName = this.onChangeSongName.bind(this);
       this.onChangeSongArtist = this.onChangeSongArtist.bind(this);
+      this.onChangeSongRating = this.onChangeSongRating.bind(this);
       this.saveSong = this.saveSong.bind(this);
       this.newSong = this.newSong.bind(this);
   
       this.state = {
         song_title: "",
         artist_name: "", 
+        rating: "",
   
         submitted: false
       };
@@ -28,12 +30,19 @@ export default class AddSong extends Component {
         artist_name: e.target.value
       });
     }
+
+    onChangeSongRating(e) {
+      this.setState({
+        rating: e.target.value
+      });
+    }
   
     saveSong() {
         console.log('button clicked')
         var data = {
             song_title: this.state.song_title,
-            artist_name: this.state.artist_name
+            artist_name: this.state.artist_name,
+            rating: this.state.rating
         };
 
         SongsService.create(data)
@@ -41,6 +50,7 @@ export default class AddSong extends Component {
             this.setState({
                 song_title: response.data.song_title,
                 artist_name: response.data.artist_name,
+                rating: response.data.rating,
 
                 submitted: true
             });
@@ -55,6 +65,7 @@ export default class AddSong extends Component {
       this.setState({
         song_title: "",
         artist_name: "",
+        rating: "",
 
         submitted:false
       });
@@ -95,6 +106,19 @@ export default class AddSong extends Component {
                     value={this.state.artist_name}
                     onChange={this.onChangeSongArtist}
                     name="artist_name"
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="rating">Rating</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="rating"
+                    required
+                    value={this.state.rating}
+                    onChange={this.onChangeSongRating}
+                    name="rating"
                   />
                 </div>
     

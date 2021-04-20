@@ -53,11 +53,13 @@ def songs_list(request):
     # GET list of songs, POST a new song, DELETE all songs
     if request.method == 'GET':
         songs = Songs.objects.all()
+        for song in songs: 
+            song.avgRating.update(avgRating=song.avgRating())
         
         song_title = request.GET.get('song_title', None)
         if song_title is not None:
             song = songs.filter(title__icontains=song_title)
-        
+
         songs_serializer = SongsSerializer(songs, many=True)
         return JsonResponse(songs_serializer.data, safe=False)
 

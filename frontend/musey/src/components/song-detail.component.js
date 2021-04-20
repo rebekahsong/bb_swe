@@ -6,6 +6,7 @@ export default class SongDetail extends Component {
     super(props);
     this.onChangeSongTitle = this.onChangeSongTitle.bind(this);
     this.onChangeArtist = this.onChangeArtist.bind(this);
+    this.onChangeRating = this.onChangeRating.bind(this);
     this.getSong = this.getSong.bind(this);
     //this.updatePublished = this.updatePublished.bind(this);
     this.updateSong = this.updateSong.bind(this);
@@ -15,7 +16,8 @@ export default class SongDetail extends Component {
       oldSongTitle: "",
       currentSong: {
         song_title: "",
-        artist_name: ""
+        artist_name: "",
+        rating: ""
       },
       message: ""
     };
@@ -46,6 +48,17 @@ export default class SongDetail extends Component {
       currentSong: {
         ...prevState.currentSong,
         artist_name: artist_name
+      }
+    }));
+  }
+
+  onChangeRating(e) {
+    const rating = e.target.value;
+    
+    this.setState(prevState => ({
+      currentSong: {
+        ...prevState.currentSong,
+        rating: rating
       }
     }));
   }
@@ -120,6 +133,16 @@ export default class SongDetail extends Component {
                   id="artist_name"
                   value={currentSong.artist_name}
                   onChange={this.onChangeArtist}
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="rating">Rating</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="rating"
+                  value={currentSong.rating}
+                  onChange={this.onChangeRating}
                 />
               </div>
 

@@ -148,6 +148,12 @@ export default class SongsList extends Component {
                 </label>{" "}
                 {currentSong.artist_name}
               </div>
+              <div>
+                <label>
+                  <strong>Rating:</strong>
+                </label>{" "}
+                {currentSong.rating}
+              </div>
 
               <Link
                 to={"/songs/" + currentSong.song_title}
