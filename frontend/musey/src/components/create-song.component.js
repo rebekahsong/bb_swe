@@ -64,7 +64,6 @@ export default class AddSong extends Component {
     }
 
     saveRating() {
-      console.log('button clicked');
       const user = localStorage.getItem("user");
       var data = {
           username: user,
@@ -86,7 +85,7 @@ export default class AddSong extends Component {
             if (e.response){
               console.log(e.response);
               if (e.response.status=="400"){
-                toastOnError("Looks like you already have a rating for this song")
+                toastOnError("Looks like you already have a rating for this song. Why don't you update your rating instead?")
               }
               if (e.response.status == "500"){
                 toastOnError("Looks like that song isn't in our database. Feel free to add it in below!");
@@ -165,7 +164,7 @@ export default class AddSong extends Component {
                 </div>
     
                 
-                <button onClick={this.saveRating} className="btn btn-success">
+                <button onClick={this.saveRating} className="badge badge-success">
                   Submit Your Rating
                 </button>
 
@@ -202,7 +201,7 @@ export default class AddSong extends Component {
                   />
                 </div>
 
-                <button onClick={this.saveSong} className="btn btn-success">
+                <button onClick={this.saveSong} className="badge badge-success">
                   Add New Song
                 </button>
 

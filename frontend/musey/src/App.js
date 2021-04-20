@@ -7,6 +7,7 @@ import { Link, Switch, Route, withRouter} from 'react-router-dom';
 import "bootstrap/dist/css/bootstrap.min.css";
 import SongsList from './components/song-list.component';
 import AddSong from './components/create-song.component';
+import EditSong from './components/edit-song.component';
 import SongDetail from './components/song-detail.component';
 import Signup from './components/signup/signup.component';
 import Login from './components/login/login.component';
@@ -46,6 +47,11 @@ class App extends Component {
                       Add
                     </Link>
                   </li>
+                  <li className="nav-item">
+                    <Link to={"/edit"} className="nav-link">
+                      Update
+                    </Link>
+                  </li>
                   <li className='nav-item'>
                     <Nav.Link onClick={this.onLogout}>Logout</Nav.Link>
                   </li>
@@ -54,6 +60,7 @@ class App extends Component {
                 <Switch>
                   <Route exact path={["/", "/songs"]} component={requireAuth(SongsList)} />
                   <Route exact path="/add" component={requireAuth(AddSong)} />
+                  <Route exact path="/edit" component={requireAuth(EditSong)} />
                   <Route path="/songs/:song_title" component={requireAuth(SongDetail)} />
                   <Route exact path="/signup" component={Signup} />
                   <Route exact path = "/login" component={Login}/>

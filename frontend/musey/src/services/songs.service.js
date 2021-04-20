@@ -34,6 +34,14 @@ class SongsService {
     return baseHttp().delete(`/songs/${id}`);
   }
 
+  updateRating(data) {
+    return baseHttp().put(`/ratings`, data);
+  }
+
+  deleteRating(id) {
+    return baseHttp().delete(`/ratings/${id}`);
+  }
+
   deleteAll() {
     return baseHttp().delete(`/songs`);
   }
