@@ -137,13 +137,6 @@ export default class SongsList extends Component {
                 </li>
               ))}
           </ul>
-
-          <button
-            className="m-3 btn btn-sm btn-danger"
-            onClick={this.removeAllSongs}
-          >
-            Remove All
-          </button>
         </div>
         <div className="col-md-6">
           {currentSong ? (
@@ -172,7 +165,7 @@ export default class SongsList extends Component {
                 to={"/songs/" + currentSong.song_title}
                 className="badge badge-warning"
               >
-                Edit
+                Edit Song
               </Link>
             </div>
           ) : (

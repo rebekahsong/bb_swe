@@ -2,7 +2,7 @@ import axios from "axios";
 import { push } from "connected-react-router";
 import { toast } from "react-toastify";
 import { SET_TOKEN, SET_CURRENT_USER, UNSET_CURRENT_USER } from "./login-types";
-import { setAxiosAuthToken, toastOnError } from "../../utils/Utils";
+import authHeader, { setAxiosAuthToken, toastOnError } from "../../utils/Utils";
 
 export const login = (userData, redirectTo) => dispatch => {
   axios
@@ -11,6 +11,14 @@ export const login = (userData, redirectTo) => dispatch => {
       const { auth_token } = response.data;
       setAxiosAuthToken(auth_token);
       dispatch(setToken(auth_token));
+      axios
+      .post("/musey/api/setuser", userData, authHeader())
+      .then(
+        console.log('success')
+      ).catch(error => {
+        dispatch(unsetCurrentUser());
+        toastOnError(error);
+      })
       dispatch(getCurrentUser(redirectTo));
     })
     .catch(error => {
