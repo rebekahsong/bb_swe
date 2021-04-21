@@ -6,6 +6,7 @@ export default class SongDetail extends Component {
     super(props);
     this.onChangeSongTitle = this.onChangeSongTitle.bind(this);
     this.onChangeArtist = this.onChangeArtist.bind(this);
+    this.onChangeavgRating = this.onChangeavgRating.bind(this);
     this.getSong = this.getSong.bind(this);
     //this.updatePublished = this.updatePublished.bind(this);
     this.updateSong = this.updateSong.bind(this);
@@ -15,7 +16,8 @@ export default class SongDetail extends Component {
       oldSongTitle: "",
       currentSong: {
         song_title: "",
-        artist_name: ""
+        artist_name: "",
+        avgRating: ""
       },
       message: ""
     };
@@ -50,6 +52,17 @@ export default class SongDetail extends Component {
     }));
   }
 
+  onChangeavgRating(e) {
+    const avgRating = e.target.value;
+    
+    this.setState(prevState => ({
+      currentSong: {
+        ...prevState.currentSong,
+        avgRating: avgRating
+      }
+    }));
+  }
+
   getSong(song_title) {
     SongsService.get(song_title)
       .then(response => {
@@ -57,8 +70,6 @@ export default class SongDetail extends Component {
           currentSong: response.data,
           oldSongTitle: response.data.song_title
         });
-        // console.log("old song title")
-        // console.log(this.state.oldSongTitle)
         console.log(response.data);
       })
       .catch(e => {
@@ -93,6 +104,9 @@ export default class SongDetail extends Component {
       });
   }
 
+  //TODO: change so you can only delete your own 
+//TODO: change the update so it only updates the user's rating not anything else
+
   render() {
     const { currentSong } = this.state;
 
@@ -122,10 +136,20 @@ export default class SongDetail extends Component {
                   onChange={this.onChangeArtist}
                 />
               </div>
+              <div className="form-group">
+                <label htmlFor="avgRating">Your Rating</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="avgRating"
+                  value={currentSong.avgRating}
+                  onChange={this.onChangeavgRating}
+                />
+              </div>
 
               {/* <div className="form-group">
                 <label>
-                  <strong>Rating:</strong>
+                  <strong>avgRating:</strong>
                 </label>
                 {currentSong.published ? "Published" : "Pending"}
               </div> */}

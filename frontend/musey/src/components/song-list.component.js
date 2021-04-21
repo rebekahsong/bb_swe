@@ -72,7 +72,8 @@ export default class SongsList extends Component {
   }
 
   searchSong() {
-    SongsService.get(this.state.searchSong)
+    if (this.state.searchSong === "") {
+      SongsService.getAll()
       .then(response => {
         this.setState({
           songs: response.data
@@ -82,7 +83,19 @@ export default class SongsList extends Component {
       .catch(e => {
         console.log(e);
       });
-  }
+    } else {
+      SongsService.get(this.state.searchSong)
+        .then(response => {
+          this.setState({
+            songs: [response.data]
+          });
+          console.log(response.data);
+        })
+        .catch(e => {
+          console.log(e);
+        });
+    }
+  };
 
   render() {
     const { searchSong, songs, currentSong, currentIndex } = this.state;
@@ -147,6 +160,12 @@ export default class SongsList extends Component {
                   <strong>Artist:</strong>
                 </label>{" "}
                 {currentSong.artist_name}
+              </div>
+              <div>
+                <label>
+                  <strong>Average Rating:</strong>
+                </label>{" "}
+                {currentSong.avgRating}
               </div>
 
               <Link
