@@ -181,3 +181,16 @@ def ratings(request):
         return JsonResponse({'message':'success updating rating'}, status=status.HTTP_201_CREATED)
 
         
+@api_view(['POST'])
+def setuser(request):
+    if request.method == "POST":
+        try:
+            data = JSONParser().parse(request)
+            username = data['username']
+            user = Users.objects.get(username=username)
+        except Users.DoesNotExist:
+            user = Users.objects.create(username=username)
+            print("user created")
+        except:
+            print('bad')
+    return JsonResponse({'message': 'User Logged In!'}, status=status.HTTP_204_NO_CONTENT)
