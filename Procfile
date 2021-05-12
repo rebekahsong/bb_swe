@@ -1,0 +1,1 @@
+web: gunicorn bb-swe.wsgi --log-file -
