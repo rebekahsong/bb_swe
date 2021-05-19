@@ -11,15 +11,15 @@ export const login = (userData, redirectTo) => dispatch => {
       const { auth_token } = response.data;
       setAxiosAuthToken(auth_token);
       dispatch(setToken(auth_token));
-      dispatch(getCurrentUser(redirectTo));
       axios
-      .post("/musey/api/login/", userData, authHeader())
+      .post("/musey/api/setuser", userData, authHeader())
       .then(
         console.log('success')
       ).catch(error => {
         dispatch(unsetCurrentUser());
         toastOnError(error);
       })
+      dispatch(getCurrentUser(redirectTo));
     })
     .catch(error => {
       dispatch(unsetCurrentUser());
