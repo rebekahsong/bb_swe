@@ -26,7 +26,7 @@ The H10 code error indicates a crashed web dyno or a boot timeout on the web dyn
 
 ## React Native
 
-Very unfortunately, in the pursuit of getting our deployment working, the React Native code that we were working on which was only locally stored and not pushed to its branch, was lost. Ben created an app with login and logout. He implemented functionality to fetch the songs list and display the list in a scrolling view.
+Very unfortunately, in the pursuit of getting our deployment working, the React Native code that we were working on which was only locally stored and not pushed to its branch, was lost. Ben created an app with login and logout. He implemented functionality to fetch the songs list and display the list in a scrolling view. Once we lost all our work, we decided to cut our losses... :(
 
 ## Virtual Environment
 
