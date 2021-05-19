@@ -1,15 +1,10 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from django.http.response import JsonResponse
-from django.contrib.auth import get_user_model
 from rest_framework.parsers import JSONParser 
 from rest_framework import status
-from rest_framework.generics import CreateAPIView
-from rest_framework.permissions import AllowAny
-from rest_framework.response import Response
-from rest_framework.authtoken.models import Token
-from rest_framework.views import APIView
-from .serializers import CreateUserSerializer, SongsSerializer, RatingsSerializer
+from .serializers import SongsSerializer
+from .serializers import RatingsSerializer
 from rest_framework.decorators import api_view
 from .models import Users, Songs, Ratings
 import json
@@ -141,43 +136,16 @@ def ratings(request):
         return JsonResponse({'message':'success updating rating'}, status=status.HTTP_201_CREATED)
 
         
-# @api_view(['POST'])
-# def setuser(request):
-#     if request.method == "POST":
-#         try:
-#             data = JSONParser().parse(request)
-#             username = data['username']
-#             user = Users.objects.get(username=username)
-#         except Users.DoesNotExist:
-#             user = Users.objects.create(username=username)
-#             print("user created")
-#         except:
-#             print('bad')
-#     return JsonResponse({'message': 'User Logged In!'}, status=status.HTTP_204_NO_CONTENT)
-
-class CreateUserAPIView(CreateAPIView):
-    serializer_class = CreateUserSerializer
-    permission_classes = [AllowAny]
-
-    def create(self, request, *args, **kwargs):
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        self.perform_create(serializer)
-        headers = self.get_success_headers(serializer.data)
-        # We create a token than will be used for future auth
-        token = Token.objects.create(user=serializer.instance)
-        token_data = {"token": token.key}
-        return Response(
-            {**serializer.data, **token_data},
-            status=status.HTTP_201_CREATED,
-            headers=headers
-        )
-
-
-class LogoutUserAPIView(APIView):
-    queryset = get_user_model().objects.all()
-
-    def get(self, request, format=None):
-        # simply delete the token to force a login
-        request.user.auth_token.delete()
-        return Response(status=status.HTTP_200_OK)
+@api_view(['POST'])
+def setuser(request):
+    if request.method == "POST":
+        try:
+            data = JSONParser().parse(request)
+            username = data['username']
+            user = Users.objects.get(username=username)
+        except Users.DoesNotExist:
+            user = Users.objects.create(username=username)
+            print("user created")
+        except:
+            print('bad')
+    return JsonResponse({'message': 'User Logged In!'}, status=status.HTTP_204_NO_CONTENT)
